@@ -1,0 +1,118 @@
+2 nd )
+mysql> create database pet;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> use pet;
+Database changed
+
+1.Create table Pets and perform following operations:
+Pet(pet_id,pet_name,owner,sex,birth_date,death_date)
+
+mysql> create table pets(
+    -> pet_id int PRIMARY KEY, owner varchar(100),sex varchar(100),birth_date DATE,death_date DATE);
+Query OK, 0 rows affected (0.04 sec)
+
+
+mysql> INSERT INTO pets(pet_id, owner, sex, birth_date, death_date)
+    -> VALUES
+    -> (1, 'gayatri', 'female', '2007-11-12', '2008-12-13'),
+    -> (2, 'sanika', 'female', '2004-06-05', '2008-12-06'),
+    -> (3, 'rutuja', 'female', '2012-02-08', '2020-05-03'),
+    -> (4, 'dganu', 'male', '2008-12-06', '2021-01-04'),
+    -> (5, 'palak', 'male', '2002-06-05', '2011-02-06');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc pets;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| pet_id     | int          | NO   | PRI | NULL    |       |
+| owner      | varchar(100) | YES  |     | NULL    |       |
+| sex        | varchar(100) | YES  |     | NULL    |       |
+| birth_date | date         | YES  |     | NULL    |       |
+| death_date | date         | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+2. Display all the pets information
+
+mysql> select *from pets;
++--------+---------+--------+------------+------------+
+| pet_id | owner   | sex    | birth_date | death_date |
++--------+---------+--------+------------+------------+
+|      1 | gayatri | female | 2007-11-12 | 2008-12-13 |
+|      2 | sanika  | female | 2004-06-05 | 2008-12-06 |
+|      3 | rutuja  | female | 2012-02-08 | 2020-05-03 |
+|      4 | dganu   | male   | 2008-12-06 | 2021-01-04 |
+|      5 | palak   | male   | 2002-06-05 | 2011-02-06 |
++--------+---------+--------+------------+------------+
+5 rows in set (0.00 sec)
+
+2. Update owner to “Mitali” for pet_id 3;
+
+mysql> update pets set owner='Mitali' where pet_id=3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from pets;
++--------+---------+--------+------------+------------+
+| pet_id | owner   | sex    | birth_date | death_date |
++--------+---------+--------+------------+------------+
+|      1 | gayatri | female | 2007-11-12 | 2008-12-13 |
+|      2 | sanika  | female | 2004-06-05 | 2008-12-06 |
+|      3 | Mitali  | female | 2012-02-08 | 2020-05-03 |
+|      4 | dganu   | male   | 2008-12-06 | 2021-01-04 |
+|      5 | palak   | male   | 2002-06-05 | 2011-02-06 |
++--------+---------+--------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from pets where pet_id=2;
++--------+--------+--------+------------+------------+
+| pet_id | owner  | sex    | birth_date | death_date |
++--------+--------+--------+------------+------------+
+|      2 | sanika | female | 2004-06-05 | 2008-12-06 |
++--------+--------+--------+------------+------------+
+1 row in set (0.00 sec)
+
+3. Display the pet information of specific owner
+
+mysql> select *from pets where owner='rutuja';;
+Empty set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> select *from pets where owner='palak';
++--------+-------+------+------------+------------+
+| pet_id | owner | sex  | birth_date | death_date |
++--------+-------+------+------------+------------+
+|      5 | palak | male | 2002-06-05 | 2011-02-06 |
++--------+-------+------+------------+------------+
+1 row in set (0.00 sec)
+
+4. Count the no. of pet records
+
+mysql> select count(*) as total_pets from pets;
++------------+
+| total_pets |
++------------+
+|          5 |
++------------+
+1 row in set (0.01 sec)
+
+5. Delete information of all pets whose sex is Male
+
+mysql> delete from pets where sex='male';
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select *from pets;
++--------+---------+--------+------------+------------+
+| pet_id | owner   | sex    | birth_date | death_date |
++--------+---------+--------+------------+------------+
+|      1 | gayatri | female | 2007-11-12 | 2008-12-13 |
+|      2 | sanika  | female | 2004-06-05 | 2008-12-06 |
+|      3 | Mitali  | female | 2012-02-08 | 2020-05-03 |
++--------+---------+--------+------------+------------+
+3 rows in set (0.00 sec)
+

@@ -1,0 +1,124 @@
+
+1. Draw an ER diagram for Book shop management system convert it into tables
+and Create atleast 2 tables in SQL with required constraints
+
+mysql> CREATE TABLE Custome (
+    ->     Customer_ID INT PRIMARY KEY,
+    ->     Name VARCHAR(100) NOT NULL,
+    ->     Email VARCHAR(100) UNIQUE,
+    ->     Phone VARCHAR(15)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into custome (customer_id, name, email, phone) values
+    -> (1, 'rahul sharma', 'rahul@gmail.com', '9876543210'),
+    -> (2, 'anita desai', 'anita.d@gmail.com', '9123456780'),
+    -> (3, 'rohan mehta', 'rohan123@yahoo.com', '9012345678'),
+    -> (4, 'sneha patil', 'sneha.p@gmail.com', '8765432109'),
+    -> (5, 'amit khanna', 'amit_khanna@hotmail.com', '9988776655');
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE Book (
+    ->     Book_ID INT PRIMARY KEY,
+    ->     Title VARCHAR(100) NOT NULL,
+    ->     Author VARCHAR(100),
+    ->     Price DECIMAL(10, 2) CHECK (Price >= 0),
+    ->     Stock INT DEFAULT 0 CHECK (Stock >= 0)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into book (book_id, title, author, price, stock) values
+    -> (1, 'the alchemist', 'paulo coelho', 299.50, 10),
+    -> (2, 'harry potter', 'j.k. rowling', 499.00, 15),
+    -> (3, 'to kill a mockingbird', 'harper lee', 399.00, 8),
+    -> (4, '1984', 'george orwell', 359.00, 12),
+    -> (5, 'the great gatsby', 'f. scott fitzgerald', 349.00, 6);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> create table order (
+    ->     order_id int primary key,
+    ->     customer_id int,
+    ->     order_date date,
+    ->     foreign key (customer_id) references custome(customer_id)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into order (order_id, customer_id, order_date) values
+    -> (1, 1, '2025-04-15'),
+    -> (2, 2, '2025-04-16'),
+    -> (3, 3, '2025-04-17'),
+    -> (4, 4, '2025-04-18'),
+    -> (5, 5, '2025-04-19');
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE Order_Details (
+    ->     Order_ID INT,
+    ->     Book_ID INT,
+    ->     Quantity INT CHECK (Quantity > 0),
+    ->     PRIMARY KEY (Order_ID, Book_ID),
+    ->     FOREIGN KEY (Order_ID) REFERENCES `Order`(Order_ID),
+    ->     FOREIGN KEY (Book_ID) REFERENCES Book(Book_ID)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into order_details (order_id, book_id, quantity) values
+    -> (1, 1, 2),  -- Order 1, Book 1, 2 copies
+    -> (2, 2, 3),  -- Order 2, Book 2, 3 copies
+    -> (3, 3, 1),  -- Order 3, Book 3, 1 copy
+    -> (4, 4, 4),  -- Order 4, Book 4, 4 copies
+    -> (5, 5, 2);  -- Order 5, Book 5, 2 copies
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from custome;
++-------------+--------------+-------------------------+------------+
+| Customer_ID | Name         | Email                   | Phone      |
++-------------+--------------+-------------------------+------------+
+|           1 | rahul sharma | rahul@gmail.com         | 9876543210 |
+|           2 | anita desai  | anita.d@gmail.com       | 9123456780 |
+|           3 | rohan mehta  | rohan123@yahoo.com      | 9012345678 |
+|           4 | sneha patil  | sneha.p@gmail.com       | 8765432109 |
+|           5 | amit khanna  | amit_khanna@hotmail.com | 9988776655 |
++-------------+--------------+-------------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Book;
++---------+-----------------------+---------------------+--------+-------+
+| Book_ID | Title                 | Author              | Price  | Stock |
++---------+-----------------------+---------------------+--------+-------+
+|       1 | the alchemist         | paulo coelho        | 299.50 |    10 |
+|       2 | harry potter          | j.k. rowling        | 499.00 |    15 |
+|       3 | to kill a mockingbird | harper lee          | 399.00 |     8 |
+|       4 | 1984                  | george orwell       | 359.00 |    12 |
+|       5 | the great gatsby      | f. scott fitzgerald | 349.00 |     6 |
++---------+-----------------------+---------------------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from order;
++----------+-------------+------------+
+| order_id | customer_id | order_date |
++----------+-------------+------------+
+|        1 |           1 | 2025-04-15 |
+|        2 |           2 | 2025-04-16 |
+|        3 |           3 | 2025-04-17 |
+|        4 |           4 | 2025-04-18 |
+|        5 |           5 | 2025-04-19 |
++----------+-------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from order_details;
++----------+---------+----------+
+| Order_ID | Book_ID | Quantity |
++----------+---------+----------+
+|        1 |       1 |        2 |
+|        2 |       2 |        3 |
+|        3 |       3 |        1 |
+|        4 |       4 |        4 |
+|        5 |       5 |        2 |
++----------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql>

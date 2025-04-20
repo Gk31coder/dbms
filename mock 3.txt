@@ -1,0 +1,92 @@
+3. Create table Tutorial(tutorial_id,tut_title,author,submission_date)
+Implement following operation on above table
+
+
+mysql> create table tutorial(tutorial_id int PRIMARY KEY,tut_title varchar(10),author varchar(20), sub_date DATE);
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> INSERT INTO tutorial(tutorial_id, tut_title, author, sub_date)
+    -> VALUES
+    -> (1, 'ass1', 'simmi', '2005-02-11'),
+    -> (2, 'dbms', 'kanadebai', '2004-03-05'),
+    -> (3, 'PA', 'sagar', '2021-03-09');
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+1. Display all the tutorial details
+
+mysql>
+mysql> select *from tutorial;
++-------------+-----------+-----------+------------+
+| tutorial_id | tut_title | author    | sub_date   |
++-------------+-----------+-----------+------------+
+|           1 | ass1      | simmi     | 2005-02-11 |
+|           2 | dbms      | kanadebai | 2004-03-05 |
+|           3 | PA        | sagar     | 2021-03-09 |
++-------------+-----------+-----------+------------+
+3 rows in set (0.00 sec)
+
+2. Find/Display specific tutorial_id and author of respective tutorial
+
+
+mysql> select tutorial_id,author from tutorial where tutorial_id=2;
++-------------+-----------+
+| tutorial_id | author    |
++-------------+-----------+
+|           2 | kanadebai |
++-------------+-----------+
+1 row in set (0.00 sec)
+
+3. Display all the records of tutorial where author name starts with”Sa”
+
+mysql> select *from tutorial where author like 'si';
+Empty set (0.00 sec)
+
+mysql> select *from tutorial where author like 'si%';
++-------------+-----------+--------+------------+
+| tutorial_id | tut_title | author | sub_date   |
++-------------+-----------+--------+------------+
+|           1 | ass1      | simmi  | 2005-02-11 |
++-------------+-----------+--------+------------+
+1 row in set (0.00 sec)
+
+4. Display all tutorials in Ascending and Descending order according to
+tutorial_id 
+
+mysql> select *from tutorial order by tutorial_id;
++-------------+-----------+-----------+------------+
+| tutorial_id | tut_title | author    | sub_date   |
++-------------+-----------+-----------+------------+
+|           1 | ass1      | simmi     | 2005-02-11 |
+|           2 | dbms      | kanadebai | 2004-03-05 |
+|           3 | PA        | sagar     | 2021-03-09 |
++-------------+-----------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from tutorial order by tutorial_id desc;
++-------------+-----------+-----------+------------+
+| tutorial_id | tut_title | author    | sub_date   |
++-------------+-----------+-----------+------------+
+|           3 | PA        | sagar     | 2021-03-09 |
+|           2 | dbms      | kanadebai | 2004-03-05 |
+|           1 | ass1      | simmi     | 2005-02-11 |
++-------------+-----------+-----------+------------+
+3 rows in set (0.00 sec)
+
+5. Drop column submission_date from Tutorial
+mysql> alter table tutorial drop column sub_date;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from tutorial;
++-------------+-----------+-----------+
+| tutorial_id | tut_title | author    |
++-------------+-----------+-----------+
+|           1 | ass1      | simmi     |
+|           2 | dbms      | kanadebai |
+|           3 | PA        | sagar     |
++-------------+-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql>
